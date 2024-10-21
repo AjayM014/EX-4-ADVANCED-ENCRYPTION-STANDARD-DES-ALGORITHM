@@ -43,9 +43,8 @@ return 0;
 }
 
 
-
 ## OUTPUT:
-![Screenshot 2024-10-21 090642](https://github.com/user-attachments/assets/4a22e772-a106-4436-a9d3-fcaae960474a)
+![Screenshot 2024-10-21 090947](https://github.com/user-attachments/assets/31c90ea4-6fa8-40f9-915e-7639e1060198)
 
 
 ## RESULT: 
