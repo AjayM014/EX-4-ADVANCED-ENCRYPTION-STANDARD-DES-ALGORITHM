@@ -1,52 +1,68 @@
 ## DATE:
-## EX-8-ADVANCED-ENCRYPTION-STANDARD-DES-ALGORITHM
+# EX.10 SIMULATION OF DIFFIE HELLMAN ALGORITHM
 
-## Aim:
-  To use Advanced Encryption Standard (AES) Algorithm for a practical application like URL Encryption.
+## AIM:
 
-## ALGORITHM: 
-  1. AES is based on a design principle known as a substitution–permutation. 
-  2. AES does not use a Feistel network like DES, it uses variant of Rijndael. 
-  3. It has a fixed block size of 128 bits, and a key size of 128, 192, or 256 bits. 
-  4. AES operates on a 4 × 4 column-major order array of bytes, termed the state
+To implement key exchange between users using Diffie Hellman algorithm.
 
-## PROGRAM: 
-c
+
+## ALGORITHM:
+
+•	Get the input for prime number p.
+•	Calculate the primitive root of p that is g.
+•	Calculate private keys for both users using p and g values.
+•	Similarly, secret keys for both users are calculated.
+
+## PROGRAM:
+
+```
+#include <math.h>
 #include <stdio.h>
-#include <string.h>
-
-
-  void xor_encrypt_decrypt(char *input, char *key) {
-int input_len = strlen(input);
-int key_len = strlen(key);
-
-for (int i = 0; i < input_len; i++) {
-    input[i] = input[i] ^ key[i % key_len];
+// Power function to return value of a ^ b mod P
+long long int power(long long int a, long long int b,
+long long int P)
+{
+    if (b == 1)
+    return a;
+    else
+    return (((long long int)pow(a, b)) % P);
 }
+// Driver program
+int main()
+{
+    long long int P, G, x, a, y, b, ka, kb;
+    // Both the persons will be agreed upon the
+    // public keys G and P
+    printf("\n                  *****Diffie-Hellman Key Exchange algorithm*****\n\n");
+    printf("\n\nEnter the value of P: ");
+    scanf("%lld",&P); // A prime number P is taken
+    printf("The value of P: %lld\n", P);
+    printf("Enter the value of G (Primitive root of P): ");
+    scanf("%lld",&G); // A primitive root for P, G is taken
+    printf("The value of G: %lld\n\n", G);
+    // Alice will choose the private key a
+    a = 4; // a is the chosen private key
+    printf("The private key a for Alice : %lld\n", a);
+    x = power(G, a, P); // gets the generated key
+    // Bob will choose the private key b
+    b = 3; // b is the chosen private key
+    printf("The private key b for Bob : %lld\n\n", b);
+    y = power(G, b, P); // gets the generated key
+    // Generating the secret key after the exchange
+    // of keys
+    ka = power(y, a, P); // Secret key for Alice
+    kb = power(x, b, P); // Secret key for Bob
+    printf("Secret key for the Alice is : %lld\n", ka);
+    printf("Secret Key for the Bob is : %lld\n", kb);
+    return 0;
 }
-
-int main() {
-    printf("\n\n\n\n      ***** ADVANCED-ENCRYPTION-STANDARD-DES-ALGORITHM *****\n\n\n");
-    
-char url[] = "DINAGARAN JOHNY";
-char key[] = "secretkey"; 
-
-printf("Original text: %s\n", url);
-
-xor_encrypt_decrypt(url, key);
-printf("Encrypted text: %s\n", url);
-
-xor_encrypt_decrypt(url, key);
-printf("Decrypted text: %s\n", url);
-
-return 0;
-}
-
-
+```
 ## OUTPUT:
-![Screenshot 2024-10-21 090947](https://github.com/user-attachments/assets/31c90ea4-6fa8-40f9-915e-7639e1060198)
+
+ ![image](https://github.com/user-attachments/assets/91972e17-f672-4b05-9a32-69ee330307e8)
 
 
-## RESULT: 
+## RESULT:
 
-The execution program is successfully executed.
+Hence, the simulation of Diffie Hellman algorithm is successfully done.
+
