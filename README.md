@@ -1,16 +1,22 @@
 # EX-7-ADVANCED-ENCRYPTION-STANDARD-DES-ALGORITHM
 
 ## Aim:
+
   To use Advanced Encryption Standard (AES) Algorithm for a practical application like URL Encryption.
 
 ## ALGORITHM: 
-  1. AES is based on a design principle known as a substitution–permutation. 
-  2. AES does not use a Feistel network like DES, it uses variant of Rijndael. 
-  3. It has a fixed block size of 128 bits, and a key size of 128, 192, or 256 bits. 
+
+  1. AES is based on a design principle known as a substitution–permutation.
+    
+  2. AES does not use a Feistel network like DES, it uses variant of Rijndael.
+   
+  3. It has a fixed block size of 128 bits, and a key size of 128, 192, or 256 bits.
+   
   4. AES operates on a 4 × 4 column-major order array of bytes, termed the state
 
 ## PROGRAM: 
 
+```c#
 #include <stdio.h>
 #include <string.h>
 
@@ -62,9 +68,12 @@ int main()
 
     return 0;
 }
+```
 ## OUTPUT:
-![Screenshot 2024-10-21 082037](https://github.com/user-attachments/assets/6e2bf996-08d7-47d0-b8dc-3f06c2d16262)
+
+![Screenshot 2024-10-21 082037](https://github.com/user-attachments/assets/088fd8c7-4045-4289-a2bc-181d76b652b3)
 
 
 ## RESULT: 
+
 Hence,to use Advanced Encryption Standard (AES) Algorithm for a practical application like URL Encryption is done successfully.
