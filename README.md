@@ -1,5 +1,5 @@
 ## DATE:
-### EXP 14 HASH
+# EXP 14 HASH
 
 ## AIM:
 To generate a simple hash of a given message using a custom hash function.
