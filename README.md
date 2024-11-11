@@ -1,73 +1,81 @@
 ## DATE:
-# EX-12-ElGamal
+# EXP-13-MAC-
 
 ## AIM:
-To encrypt and decrypt a message using the ElGamal encryption algorithm.
+To generate and verify a Message Authentication Code (MAC) for ensuring the integrity and
+authenticity of a message using a simple XOR operation.
 ## ALGORITHM:
-Choose a large prime number p and a generator g of the multiplicative group of integers modulo
-p. Alice chooses a private key and computes her public key as public_key = g^private_key mod p.
-To encrypt a message, Bob chooses a random number k and computes a ciphertext pair (c1, c2). To
-decrypt the message, Alice uses her private key and computes the original message. The decrypted
-message is verified to be the same as the original.
+Input a secret key and a message from the user. Generate the MAC by applying a simple XOR
+operation between the secret key and the message. The MAC is computed by repeating the key or
+message as necessary. The user can input a received MAC, and the program verifies whether the
+received MAC matches the computed MAC. The authenticity of the message is confirmed if the
+MACs match.
 ## PROGRAM:
 ```
 #include <stdio.h>
-#include <math.h>
+#include <string.h>
 
-// Function to compute modular exponentiation (base^exp % mod)
-long long int modExp(long long int base, long long int exp, long long int mod) {
-    long long int result = 1;
-    while (exp > 0) {
-        if (exp % 2 == 1) {
-            result = (result * base) % mod;
-        }
-        base = (base * base) % mod;
-        exp = exp / 2;
-    }
-    return result;
+#define MAC_SIZE 32 // Define MAC size in bytes
+
+// Function to compute a simple MAC using XOR
+void computeMAC(const char *key, const char *message, char *mac) {
+int key_len = strlen(key);
+int msg_len = strlen(message);
+
+// XOR the key and message, repeating if necessary
+for (int i = 0; i < MAC_SIZE; i++) {
+mac[i] = key[i % key_len] ^ message[i % msg_len]; // Simple XOR operation
+}
+mac[MAC_SIZE] = '\0'; // Null-terminate the MAC string
+
 }
 
+
 int main() {
-    long long int p, g, privateKeyA, publicKeyA;
-    long long int k, message, c1, c2, decryptedMessage;
+char key[100], message[100];
+char mac[MAC_SIZE + 1]; // Buffer for MAC (+1 for null terminator)
+char receivedMAC[MAC_SIZE + 1]; // Buffer for input of received MAC
 
-    // Step 1: Input a large prime number (p) and a generator (g)
-    printf("Enter a large prime number (p): ");
-    scanf("%lld", &p);
-    printf("Enter a generator (g): ");
-    scanf("%lld", &g);
+// Step 1: Input secret key
+printf("Enter the secret key: ");
+scanf("%s", key);
 
-    // Step 2: Alice inputs her private key
-    printf("Enter Alice's private key: ");
-    scanf("%lld", &privateKeyA);
+// Step 2: Input the message
+printf("Enter the message: ");
+scanf("%s", message);
 
-    // Step 3: Compute Alice's public key (publicKeyA = g^privateKeyA mod p)
-    publicKeyA = modExp(g, privateKeyA, p);
-    printf("Alice's public key: %lld\n", publicKeyA);
+// Step 3: Compute the MAC
+computeMAC(key, message, mac);
 
-    // Step 4: Bob inputs the message to be encrypted and selects a random k
-    printf("Enter the message to encrypt (as a number): ");
-    scanf("%lld", &message);
-    printf("Enter a random number k: ");
-    scanf("%lld", &k);
+// Step 4: Display the computed MAC in hexadecimal
+printf("Computed MAC (in hex): ");
+for (int i = 0; i < MAC_SIZE; i++) {
+printf("%02x", (unsigned char)mac[i]); // Print each byte as hex
 
-    // Step 5: Bob computes ciphertext (c1 = g^k mod p, c2 = (message * publicKeyA^k) mod p)
-    c1 = modExp(g, k, p);
-    c2 = (message * modExp(publicKeyA, k, p)) % p;
-    printf("Encrypted message (c1, c2): (%lld, %lld)\n", c1, c2);
+}
+printf("\n");
 
-    // Step 6: Alice decrypts the message (decryptedMessage = (c2 * c1^(p-1-privateKeyA)) % p)
-    decryptedMessage = (c2 * modExp(c1, p - 1 - privateKeyA, p)) % p;
-    printf("Decrypted message: %lld\n", decryptedMessage);
+// Step 5: Input the received MAC (for verification)
+printf("Enter the received MAC (as hex): ");
+for (int i = 0; i < MAC_SIZE; i++) {
+scanf("%02hhx", &receivedMAC[i]);
 
-    return 0;
+}
+
+// Compare the computed MAC with the received MAC
+if (memcmp(mac, receivedMAC, MAC_SIZE) == 0) {
+printf("MAC verification successful. Message is authentic.\n");
+} else {
+printf("MAC verification failed. Message is not authentic.\n");
+}
+return 0;
 }
 ```
 ## OUTPUT:
-![Screenshot 2024-11-11 083555](https://github.com/user-attachments/assets/ed7d05d7-eb85-4cf3-a2ed-8189739e41ce)
+![Screenshot 2024-11-11 084730](https://github.com/user-attachments/assets/14fa480e-7a78-4c30-a008-af3ab3d373e2)
 
 
 ## RESULT:
-The program for ElGamal encryption and decryption was executed successfully. Alice and Bob
-exchanged an encrypted message and verified that the decrypted message matched the origina
-message.
+The program for generating and verifying a Message Authentication Code (MAC) was executed
+successfully, demonstrating the integrity and authenticity of the message through a simple XOR-
+based MAC.
